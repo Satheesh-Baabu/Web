@@ -1,0 +1,165 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form</title>
+    <style>
+        body
+        {
+            background: url(/background.jpg);
+            background-repeat: no-repeat;
+            background-size: cover;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .form-box
+        {
+            
+            height: auto;
+            width: fit-content;
+            border: 1px solid whitesmoke;
+            border-radius: 10px;
+            padding: 20px;
+            display:flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(7px);
+        }
+        .form-box input
+        {
+            width: 300px;
+            height: 30px;
+            
+        }
+        .form-box textarea
+        {
+            width: 300px;
+            
+            
+        }
+        .label
+        {
+            font-size: 15px;
+            color: rgb(255, 255, 255);
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        }
+        .error{
+            color: red;
+            font-size: 12px;
+            font-family: Arial, Helvetica, sans-serif
+        }
+        .success
+        {
+            color: green;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="form-box">
+        <form method="post" action="valitate.php">
+            <u><h1 style="text-align: center;font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Feedback</h1></u>
+            <label class="label">Name</label>
+            <br>
+            <input type="text" placeholder="Name" id='name' name="name1" onblur="validateName()" required>
+            <br>
+            <label id='error' class="success error"></label>
+            <br>
+            <label class="label">Mobile Number</label>
+            <br>
+            <input type="number" placeholder="Mobile Number" required id='mobile' name="mobile" onblur="validateMobile()">
+            <br>
+            <label class="error" id="mobile_error" ></label>
+            <br>
+            <label class="label">Email</label>
+            <br>
+            <input type="email" placeholder="Email" required id="email" name="email" onblur="validateEmail()" >
+            <br>
+            <label class="error" id="email_error" ></label>
+            <br><br>
+            <textarea rows="4" cols="50" name="feed" placeholder="Any queries type here.." required></textarea><br>
+            <input type="submit" value="Send" id="submit"  style="background-color: #060708; color:white;" onclick="summit()">
+
+        </form>
+    </div>
+    <script>
+        var mobileInput = document.getElementById('mobile');
+        var nameInput = document.getElementById('name');
+        var emailInput = document.getElementById('email');
+        var flag1=false;
+        var flag2=false;
+        var flag3=false;
+        function validateName()
+        {
+           
+           var namePattern = /^[a-zA-Z ]{3,}$/;  
+            if(nameInput.value=="")
+            {
+                document.getElementById('error').innerText="Name Required";
+                // document.getElementById('error').classList.add("error");
+                document.getElementById('error').classList.remove("success");
+                flag1=false;
+            }
+           else if (!namePattern.test(nameInput.value))
+           {
+               document.getElementById('error').innerText = 'Name must only contain only characters more than 2';
+            //    document.getElementById('error').classList.add("error");
+               document.getElementById('error').classList.remove("success");
+               flag1=false;
+           } 
+           else {
+            flag1=true;
+            document.getElementById('error').innerText = 'Correct';
+               document.getElementById('error').classList.add("success");
+
+            //    document.getElementById('error').classList.remove("error");
+           }
+        }
+        function validateMobile() {
+           
+            var mobilePattern = /^[0-9]{10}$/;
+
+            if (!mobilePattern.test(mobileInput.value)) {
+                document.getElementById('mobile_error').innerText = 'Mobile number must be 10 numeric digits.';
+                flag2=false;
+            } else {
+                flag2=true;
+                document.getElementById('mobile_error').innerText = '';
+            }
+        }
+        function validateEmail() 
+        {
+            
+            var emailPattern = /^[\w.-]+@[a-zA-Z]+\.[a-zA-Z]+(,[\w.-]+@[a-zA-Z]+\.[a-zA-Z]+)*$/;
+
+            if (!emailPattern.test(emailInput.value)) {
+                document.getElementById('email_error').innerText = 'Invalid email format.';
+                flag3=false;
+            } else {
+                flag3=true;
+                document.getElementById('email_error').innerText = '';
+            }
+        }
+        function summit(){
+            validateName();
+                validateEmail();
+                validateMobile();
+            if(flag1==true&&flag2==true&&flag3==true)
+            {
+                
+                
+                alert('Sent successfully')
+            }
+            
+            
+            // console.log('Message received Successfully');
+            // console.log('message sent successful');
+        }
+
+    </script>
+
+</html>
